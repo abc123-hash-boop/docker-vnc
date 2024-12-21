@@ -4,7 +4,7 @@
 # base system
 ################################################################################
 
-FROM ubuntu:20.04 as system
+FROM ubuntu as system
 
 
 
@@ -82,7 +82,7 @@ RUN apt-get update \
 ################################################################################
 # builder
 ################################################################################
-FROM ubuntu:20.04 as builder
+FROM ubuntu as builder
 
 
 RUN sed -i 's#http://archive.ubuntu.com/ubuntu/#mirror://mirrors.ubuntu.com/mirrors.txt#' /etc/apt/sources.list;
@@ -113,7 +113,7 @@ RUN sed -i 's#app/locale/#novnc/app/locale/#' /src/web/dist/static/novnc/app/ui.
 ################################################################################
 # merge
 ################################################################################
-FROM system
+FROM ubuntu
 LABEL maintainer="fcwu.tw@gmail.com"
 
 COPY --from=builder /src/web/dist/ /usr/local/lib/web/frontend/
